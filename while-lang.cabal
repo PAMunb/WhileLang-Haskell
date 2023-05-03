@@ -36,6 +36,7 @@ library
   build-depends:
       HUnit
     , base >=4.7 && <5
+    , containers
   default-language: Haskell2010
 
 test-suite while-lang-test
@@ -51,5 +52,6 @@ test-suite while-lang-test
   build-depends:
       HUnit
     , base >=4.7 && <5
+    , containers
     , while-lang
   default-language: Haskell2010

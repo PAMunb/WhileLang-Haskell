@@ -9,6 +9,7 @@ data AExp = Var Id            -- variables
           | Add AExp AExp     
           | Sub AExp AExp
           | Mult AExp AExp 
+ deriving(Eq, Show, Ord) 
 
 data BExp = CTrue             -- True constant
           | CFalse            -- False constant
@@ -18,10 +19,12 @@ data BExp = CTrue             -- True constant
           | EQExp AExp AExp
           | GTExp AExp AExp
           | LTExp AExp AExp
+ deriving(Eq, Show, Ord)	  
 
 data Stmt = Assignment Id AExp Label    -- Assignment
           | Skip Label
           | Seq Stmt Stmt
           | IfThenElse (BExp, Label) Stmt Stmt
           | While (BExp, Label) Stmt
+ deriving(Eq, Show, Ord)	  
 
