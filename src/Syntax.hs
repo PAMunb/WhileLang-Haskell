@@ -26,5 +26,5 @@ data Stmt = Assignment Id AExp Label    -- Assignment
           | Seq Stmt Stmt
           | IfThenElse (BExp, Label) Stmt Stmt
           | While (BExp, Label) Stmt
- deriving(Eq, Show, Ord)	  
+ deriving(Eq, Show, Ord)	
 
