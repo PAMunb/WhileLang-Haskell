@@ -21,10 +21,10 @@ tcf03 = TestCase (assertEqual "for final s02, " (singleton 2) (final s02))
 tcf04 = TestCase (assertEqual "for final s03, " (singleton 3) (final s03))
 tcf05 = TestCase (assertEqual "for final s04, " (singleton 6) (final s04))
 
-tcb01 = TestCase (assertEqual "for blocks factorial, " ((singleton (BlocksStmt s01)) `union` (singleton (BlocksStmt s02)) `union` ((singleton (BlocksTest whileTeste)) `union` ((singleton (BlocksStmt whileS1)) `union` (singleton (BlocksStmt whileS2)))) `union` (singleton (BlocksStmt s04))) (blocks factorial))
+tcb01 = TestCase (assertEqual "for blocks factorial, " (fromList [BlocksStmt s01, BlocksStmt s02, BlocksTest whileTeste, BlocksStmt whileS1, BlocksStmt whileS2, BlocksStmt s04]) (blocks factorial))
 tcb02 = TestCase (assertEqual "for blocks s01, " (singleton (BlocksStmt s01))  (blocks s01))
 tcb03 = TestCase (assertEqual "for blocks s02, " (singleton (BlocksStmt s02)) (blocks s02))
-tcb04 = TestCase (assertEqual "for blocks s03, " ((singleton (BlocksTest whileTeste)) `union` ((singleton (BlocksStmt whileS1)) `union` (singleton (BlocksStmt whileS2)))) (blocks s03))
+tcb04 = TestCase (assertEqual "for blocks s03, " (fromList [BlocksTest whileTeste, BlocksStmt whileS1, BlocksStmt whileS2]) (blocks s03))
 tcb05 = TestCase (assertEqual "for blocks s04, " (singleton (BlocksStmt s04)) (blocks s04))
 
 
