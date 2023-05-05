@@ -3,6 +3,7 @@ module Syntax where
 type Id = String 
 type Label = Integer
 type Program = Stmt
+type TestExp = (BExp, Label)
 
 data AExp = Var Id            -- variables
           | Const Integer     -- constants
@@ -19,12 +20,14 @@ data BExp = CTrue             -- True constant
           | EQExp AExp AExp
           | GTExp AExp AExp
           | LTExp AExp AExp
- deriving(Eq, Show, Ord)	  
+ deriving(Eq, Show, Ord)  
 
 data Stmt = Assignment Id AExp Label    -- Assignment
           | Skip Label
           | Seq Stmt Stmt
-          | IfThenElse (BExp, Label) Stmt Stmt
-          | While (BExp, Label) Stmt
- deriving(Eq, Show, Ord)	
+          | IfThenElse TestExp Stmt Stmt
+          | While TestExp Stmt
+ deriving(Eq, Show, Ord)
 
+
+data Blocks = BlocksStmt Stmt | BlocksTest TestExp deriving(Eq, Show, Ord)

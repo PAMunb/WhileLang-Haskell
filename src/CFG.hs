@@ -20,5 +20,11 @@ final (IfThenElse _ s1 s2) = final s1 `union` final s2
 final (While (_, l) _) =  singleton l 
 
 
+blocks :: Stmt -> Set Blocks
+blocks (Assignment a b c) = singleton (BlocksStmt (Assignment a b c)) 
+blocks (Skip l) = singleton (BlocksStmt (Skip l))
+blocks (Seq s1 s2) = blocks s1 `union` blocks s2  
+blocks (IfThenElse testExp s1 s2) = (singleton (BlocksTest testExp)) `union` (blocks s1 `union` blocks s2)
+blocks (While testExp s) =  (singleton (BlocksTest testExp)) `union` (blocks s)
 
 
