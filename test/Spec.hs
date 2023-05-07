@@ -1,9 +1,9 @@
-import CFGTest
-
-import CFGTest 
+import CFGFactorialTest
+import CFGPowerTest
 import Test.HUnit 
 
 main :: IO ()
 main = do 
-  runTestTT testSuite
+  runTestTT testFactorialSuite
+  runTestTT testPowerSuite
   putStrLn "Done."

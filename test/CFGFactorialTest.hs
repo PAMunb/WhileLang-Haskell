@@ -1,4 +1,4 @@
-module CFGTest where 
+module CFGFactorialTest where 
 
 import CFG
 
@@ -87,8 +87,8 @@ tcflow05 :: Test
 tcflow05 = TestCase (assertEqual "for flow s04, " empty (flow s04))
 
 
-testSuite :: Test
-testSuite = TestList [ TestLabel "tci01" tci01, 
+testFactorialSuite :: Test
+testFactorialSuite = TestList [ TestLabel "tci01" tci01, 
                        TestLabel "tci02" tci02, 
                        TestLabel "tci03" tci03, 
                        TestLabel "tci04" tci04, 
