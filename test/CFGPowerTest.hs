@@ -3,7 +3,7 @@ module CFGPowerTest where
 import CFG
 
 import Syntax
-import PowerProgram
+import Programs.PowerProgram
 
 import Prelude hiding (init)
 import Test.HUnit 

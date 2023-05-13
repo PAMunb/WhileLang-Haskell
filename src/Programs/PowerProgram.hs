@@ -1,4 +1,4 @@
-module PowerProgram where 
+module Programs.PowerProgram where 
 
 import Syntax
 

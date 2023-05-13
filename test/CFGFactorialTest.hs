@@ -3,7 +3,7 @@ module CFGFactorialTest where
 import CFG
 
 import Syntax
-import FactorialProgram
+import Programs.FactorialProgram
 
 import Prelude hiding (init)
 import Test.HUnit 

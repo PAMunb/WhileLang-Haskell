@@ -1,4 +1,4 @@
-module FactorialProgram where 
+module Programs.FactorialProgram where 
 
 import Syntax
 
@@ -9,7 +9,7 @@ s01 = Assignment "y" (Var "x") 1
 s02 = Assignment "z" (Const 1) 2
 
 whileTeste = (GTExp (Var "y") (Const 1), 3)
-whileS1 = Assignment "x" (Mult (Var "z") (Var "y")) 4
+whileS1 = Assignment "z" (Mult (Var "z") (Var "y")) 4
 whileS2 = Assignment "y" (Sub (Var "y") (Const 1)) 5
 s03 = While whileTeste (Seq whileS1 whileS2)
 

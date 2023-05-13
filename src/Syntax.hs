@@ -30,4 +30,6 @@ data Stmt = Assignment Id AExp Label    -- Assignment
  deriving(Eq, Show, Ord)
 
 
-data Blocks = BlocksStmt Stmt | BlocksTest TestExp deriving(Eq, Show, Ord)
+data Blocks = BlocksStmt Stmt 
+            | BlocksTest TestExp 
+ deriving(Eq, Show, Ord)

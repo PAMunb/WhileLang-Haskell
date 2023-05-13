@@ -26,7 +26,9 @@ source-repository head
 library
   exposed-modules:
       CFG
-      Lib
+      DataFlowAnalysis.ReachingDefinitions
+      Programs.FactorialProgram
+      Programs.PowerProgram
       Syntax
   other-modules:
       Paths_while_lang
@@ -43,8 +45,8 @@ test-suite while-lang-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
-      CFGTest
-      FactorialProgram
+      CFGFactorialTest
+      CFGPowerTest
       Paths_while_lang
   hs-source-dirs:
       test
