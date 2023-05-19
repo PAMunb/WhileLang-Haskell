@@ -2,6 +2,7 @@ module CFGtoDOT.GenerateDOT where
 
 import Syntax
 import CFG
+import Programs.FactorialProgram
 
 import Prelude hiding (init)
 import Data.Set 
