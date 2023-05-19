@@ -23,6 +23,8 @@ dependencies:
 - base >= 4.7 && < 5
 - HUnit
 - containers
+- text >= 1.2 && < 1.3
+- process >= 1.6 && < 1.7
 
 ghc-options:
 - -Wall
