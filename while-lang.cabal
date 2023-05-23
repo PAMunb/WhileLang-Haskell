@@ -26,9 +26,23 @@ source-repository head
 library
   exposed-modules:
       CFG
+      CFG_BACKUP_16692
+      CFG_BASE_16692
+      CFG_LOCAL_16692
+      CFG_REMOTE_16692
+      CFGtoDOT.GenerateDOT
+      DataFlowAnalysis.AvailableExpressions
+      DataFlowAnalysis.DFAAll
+      DataFlowAnalysis.Helpers
+      DataFlowAnalysis.LiveVariables
+      DataFlowAnalysis.MaximalFixedPoint
       DataFlowAnalysis.ReachingDefinitions
+      DataFlowAnalysis.VeryBusyExpressions
+      Programs.AvailableExpressionsExample
       Programs.FactorialProgram
+      Programs.LiveVariablesExample
       Programs.PowerProgram
+      Programs.VeryBusyExpressionsExample
       Syntax
   other-modules:
       Paths_while_lang
@@ -39,6 +53,8 @@ library
       HUnit
     , base >=4.7 && <5
     , containers
+    , process ==1.6.*
+    , text ==1.2.*
   default-language: Haskell2010
 
 test-suite while-lang-test
@@ -55,5 +71,7 @@ test-suite while-lang-test
       HUnit
     , base >=4.7 && <5
     , containers
+    , process ==1.6.*
+    , text ==1.2.*
     , while-lang
   default-language: Haskell2010
