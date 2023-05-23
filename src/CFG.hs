@@ -71,6 +71,13 @@ getVarFromBExp (EQExp b1 b2) = getVarFromAExp b1 `union` getVarFromAExp b2
 getVarFromBExp (GTExp b1 b2) = getVarFromAExp b1 `union` getVarFromAExp b2
 getVarFromBExp (LTExp b1 b2) = getVarFromAExp b1 `union` getVarFromAExp b2
 
+getVars :: Program -> Set Id
+getVars (Assignment _ aexp _)  = getVarFromAExp aexp
+getVars (Skip _) = empty
+getVars (Seq s1 s2)  = getVars s1 `union` getVars s2
+getVars (IfThenElse (bExp, _) s1 s2)  = getVarFromBExp bExp `union` getVars s1 `union` getVars s2
+getVars (While (bExp, _) s)  = getVarFromBExp bExp `union` getVars s
+
 assigments :: Stmt -> Set (Id, Label)
 assigments (Assignment var _ l) = singleton (var, l)
 assigments (Skip {}) = Data.Set.empty

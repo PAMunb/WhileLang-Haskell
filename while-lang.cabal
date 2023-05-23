@@ -26,6 +26,9 @@ source-repository head
 library
   exposed-modules:
       CFG
+      CFGtoDOT.GenerateDOT
+      DataFlowAnalysis.LiveVariables
+      DataFlowAnalysis.MaximalFixedPoint
       DataFlowAnalysis.ReachingDefinitions
       Programs.FactorialProgram
       Programs.PowerProgram
@@ -39,6 +42,8 @@ library
       HUnit
     , base >=4.7 && <5
     , containers
+    , process ==1.6.*
+    , text ==1.2.*
   default-language: Haskell2010
 
 test-suite while-lang-test
@@ -55,5 +60,7 @@ test-suite while-lang-test
       HUnit
     , base >=4.7 && <5
     , containers
+    , process ==1.6.*
+    , text ==1.2.*
     , while-lang
   default-language: Haskell2010
