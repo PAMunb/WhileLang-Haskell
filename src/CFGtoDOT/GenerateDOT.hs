@@ -2,7 +2,6 @@ module CFGtoDOT.GenerateDOT where
 
 import Syntax
 import CFG
-import Programs.FactorialProgram
 
 import Prelude hiding (init)
 import Data.Set 
@@ -16,7 +15,7 @@ import System.Process
 writePairsToFile :: (Show k, Show v) => [(k, v)] -> IO ()
 writePairsToFile pairs = do
   let content = generateDotFileContent pairs
-  Data.Text.IO.writeFile "cfg.dot" content
+  Data.Text.IO.writeFile "src/CFGtoDOT/cfg.dot" content
   executeDotCommand
 
 generateDotFileContent :: (Show k, Show v) => [(k, v)] -> Data.Text.Text
@@ -32,10 +31,10 @@ generateDotFileContent pairs =
 
 executeDotCommand :: IO ()
 executeDotCommand = do
-  _ <- system "dot -Tpng cfg.dot -o cfg.png"
+  _ <- system "dot -Tpng src/CFGtoDOT/cfg.dot -o src/CFGtoDOT/cfg.png"
   pure ()
   
-callWritePairsToFile :: IO ()
-callWritePairsToFile = do
-  let myPairs = Data.Set.toList(flow factorial) -- alterar referência
+callWritePairsToFile :: Stmt -> IO ()
+callWritePairsToFile cfgprogram = do
+  let myPairs = Data.Set.toList(flow cfgprogram)
   writePairsToFile myPairs
