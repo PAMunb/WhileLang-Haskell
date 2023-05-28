@@ -2,6 +2,7 @@ module DataFlowAnalysis.ReachingDefinitions where
 
 import Syntax
 import CFG
+import DataFlowAnalysis.DFA
 
 import Data.Set
 import Data.Map
@@ -14,16 +15,15 @@ type RDEntry = Data.Map.Map Label RD
 type RDExit = Data.Map.Map Label RD
 
 reachingDefinitions :: Program -> (RDEntry, RDExit)
-reachingDefinitions prog = chaoticIteration update initial
+reachingDefinitions prog = chaoticIteration f initial
   where
     initial = (Data.Map.empty, Data.Map.empty)
-    update rd = Data.Set.foldr updateMappings rd (labels prog)
+    f rd = Data.Set.foldr updateMappings rd (labels prog)
     updateMappings l (entry', exit') =
       let 
           newEntry = rdEntry l prog exit'
           newExit = rdExit l prog entry'
       in (Data.Map.insert l newEntry entry', Data.Map.insert l newExit exit')
-    chaoticIteration f x = if f x == x then x else chaoticIteration f (f x)
 
   
 killRD :: Blocks -> Program -> RD

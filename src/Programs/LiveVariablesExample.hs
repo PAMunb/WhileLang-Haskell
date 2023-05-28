@@ -1,4 +1,4 @@
-module Programs.LiveVariableTest where 
+module Programs.LiveVariablesExample where 
 
 import Syntax
 
