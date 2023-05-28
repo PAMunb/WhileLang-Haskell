@@ -4,6 +4,7 @@ import Syntax
 
 import Prelude hiding (init)
 import Data.Set 
+import Data.Foldable
 
 init :: Stmt -> Label
 init (Assignment _ _ l) = l
@@ -56,3 +57,17 @@ flowR :: Stmt -> Set (Label, Label)
 flowR s = do
     let flowS = flow s
     Data.Set.map (\(l, l') -> (l', l)) flowS
+
+findBlock :: Label -> Program -> Maybe Blocks
+findBlock label prog = findB (blocks prog)
+    where
+        findB :: Set Blocks -> Maybe Blocks
+        findB blcks = Data.Foldable.find matchLabel blcks
+
+        matchLabel :: Blocks -> Bool
+        matchLabel (BlocksStmt stm) = do
+            case stm of
+                Assignment _ _ l ->  l == label
+                Skip l ->  l == label
+                _ -> False
+        matchLabel (BlocksTest (_, l)) = l == label

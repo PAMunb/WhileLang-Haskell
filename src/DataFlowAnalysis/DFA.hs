@@ -4,22 +4,7 @@ import Syntax
 import CFG
 
 import Data.Set
-import Data.Foldable
 import Data.List (foldl1')
-
-findBlock :: Label -> Program -> Maybe Blocks
-findBlock label prog = findB (blocks prog)
-    where
-        findB :: Set Blocks -> Maybe Blocks
-        findB blcks = Data.Foldable.find matchLabel blcks
-
-        matchLabel :: Blocks -> Bool
-        matchLabel (BlocksStmt stm) = do
-            case stm of
-                Assignment _ _ l ->  l == label
-                Skip l ->  l == label
-                _ -> False
-        matchLabel (BlocksTest (_, l)) = l == label
 
 fv :: Stmt -> Set Id
 fv (Assignment var a _) = singleton var `union` getVarFromAExp a
@@ -89,3 +74,8 @@ chaoticIteration f x = if f x == x then x else chaoticIteration f (f x)
 
 intersections :: (Ord a) => [Set a] -> Set a
 intersections = Data.List.foldl1' Data.Set.intersection
+
+-- instance Show Set where
+--     show s =
+--         let xs = [(show x) | x <- Data.Set.toList s]
+--         in "{" ++ (intercalate "," xs) ++ "}"
