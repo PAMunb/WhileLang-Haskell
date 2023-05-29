@@ -2,7 +2,7 @@ module DataFlowAnalysis.ReachingDefinitions where
 
 import Syntax
 import CFG
-import DataFlowAnalysis.DFA
+import DataFlowAnalysis.Helpers
 
 import Data.Set
 import Data.Map
@@ -33,12 +33,12 @@ killRD (BlocksStmt blcks) prog = do
         _ -> Data.Set.empty
 killRD (BlocksTest {}) _ = Data.Set.empty
 
-genRD :: Blocks -> RD
-genRD (BlocksStmt stm) = do
+genRD :: Blocks -> Program -> RD
+genRD (BlocksStmt stm) _ = do
     case stm of
         Assignment var _ l -> Data.Set.singleton (var, l)
         _ -> Data.Set.empty
-genRD (BlocksTest {}) = Data.Set.empty
+genRD (BlocksTest {}) _ = Data.Set.empty
 
 rdEntry :: Label -> Program -> RDExit  -> RD
 rdEntry l prog exit
@@ -48,5 +48,5 @@ rdEntry l prog exit
 rdExit :: Label -> Program -> RDEntry -> RD
 rdExit l prog entry = do
   let Just b = findBlock l prog
-  ((findWithDefault Data.Set.empty l entry) `Data.Set.difference` (killRD b prog)) `Data.Set.union` (genRD b)
+  ((findWithDefault Data.Set.empty l entry) `Data.Set.difference` (killRD b prog)) `Data.Set.union` (genRD b prog)
   

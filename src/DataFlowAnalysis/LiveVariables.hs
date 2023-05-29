@@ -2,7 +2,7 @@ module DataFlowAnalysis.LiveVariables where
 
 import Syntax
 import CFG
-import DataFlowAnalysis.DFA
+import DataFlowAnalysis.Helpers
 
 import Data.Set
 import Data.Map
@@ -11,8 +11,8 @@ type LV = Set (Id)
 type LVEntry = Data.Map.Map Label LV
 type LVExit = Data.Map.Map Label LV
 
-liveVariable :: Program -> (LVEntry, LVExit)
-liveVariable prog = chaoticIteration f initial
+liveVariables :: Program -> (LVEntry, LVExit)
+liveVariables prog = chaoticIteration f initial
   where
     initial = (Data.Map.empty, Data.Map.empty)
     f lv = Data.Set.foldr updateMappings lv (labels prog)
@@ -22,19 +22,19 @@ liveVariable prog = chaoticIteration f initial
           newExit = lvExit l prog entry'
       in (Data.Map.insert l newEntry entry', Data.Map.insert l newExit exit')
 
-killLV :: Blocks -> LV
-killLV (BlocksStmt blcks) = do
+killLV :: Blocks -> Program -> LV
+killLV (BlocksStmt blcks) _ = do
     case blcks of
         Assignment var _ _ -> Data.Set.singleton (var)
         _ -> Data.Set.empty
-killLV (BlocksTest _) = Data.Set.empty
+killLV (BlocksTest _) _ = Data.Set.empty
 
-genLV :: Blocks -> LV
-genLV (BlocksStmt stm) = do
+genLV :: Blocks -> Program -> LV
+genLV (BlocksStmt stm) _ = do
     case stm of
         Assignment _ aexp _ -> getVarFromAExp aexp
         _ -> Data.Set.empty
-genLV (BlocksTest (texp, _)) = getVarFromBExp texp
+genLV (BlocksTest (texp, _)) _ = getVarFromBExp texp
 
 lvExit :: Label -> Program -> LVEntry -> LV
 lvExit l prog entry
@@ -44,4 +44,4 @@ lvExit l prog entry
 lvEntry :: Label -> Program -> LVExit -> LV
 lvEntry l prog exit = do
   let Just b = findBlock l prog
-  ((findWithDefault Data.Set.empty l exit) `Data.Set.difference` (killLV b)) `Data.Set.union` (genLV b)
+  ((findWithDefault Data.Set.empty l exit) `Data.Set.difference` (killLV b prog)) `Data.Set.union` (genLV b prog)

@@ -1,4 +1,4 @@
-module DataFlowAnalysis.DFA where
+module DataFlowAnalysis.Helpers where
 
 import Syntax
 import CFG

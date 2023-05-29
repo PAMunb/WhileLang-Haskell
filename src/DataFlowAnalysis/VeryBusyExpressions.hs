@@ -2,7 +2,7 @@ module DataFlowAnalysis.VeryBusyExpressions where
 
 import Syntax
 import CFG
-import DataFlowAnalysis.DFA
+import DataFlowAnalysis.Helpers
 
 import Data.Set
 import Data.Map
@@ -12,10 +12,10 @@ type VBEntry = Data.Map.Map Label VB
 type VBExit = Data.Map.Map Label VB
 
 veryBusyExpressions :: Program -> (VBEntry, VBExit)
-veryBusyExpressions prog = chaoticIteration update initial
+veryBusyExpressions prog = chaoticIteration f initial
   where
     initial = (Data.Map.empty, Data.Map.empty)
-    update vb = Data.Set.foldr updateMappings vb (labels prog)
+    f vb = Data.Set.foldr updateMappings vb (labels prog)
     updateMappings l (entry', exit') =
       let 
           newEntry = vbEntry l prog exit'
@@ -30,9 +30,9 @@ killVB (BlocksStmt blcks) prog = do
 killVB (BlocksTest _) _ = Data.Set.empty
 
 genVB :: Blocks -> Program -> VB
-genVB (BlocksStmt blcks) prog = do
+genVB (BlocksStmt blcks) _ = do
     case blcks of
-        Assignment var aexp _ -> nonTrivialAExpression aexp
+        Assignment _ aexp _ -> nonTrivialAExpression aexp
         _ -> Data.Set.empty
 genVB (BlocksTest (bexp, _)) _ = nonTrivialBExpression bexp
 

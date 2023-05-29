@@ -2,7 +2,7 @@ module DataFlowAnalysis.AvailableExpressions where
 
 import Syntax
 import CFG
-import DataFlowAnalysis.DFA
+import DataFlowAnalysis.Helpers
 
 import Data.Set
 import Data.Map
@@ -12,10 +12,10 @@ type AEEntry = Data.Map.Map Label AE
 type AEExit = Data.Map.Map Label AE
 
 availableExpressions :: Program -> (AEEntry, AEExit)
-availableExpressions prog = chaoticIteration update initial
+availableExpressions prog = chaoticIteration f initial
   where
     initial = (Data.Map.empty, Data.Map.empty)
-    update ae = Data.Set.foldr updateMappings ae (labels prog)
+    f ae = Data.Set.foldr updateMappings ae (labels prog)
     updateMappings l (entry', exit') =
       let 
           newEntry = aeEntry l prog exit'
@@ -30,7 +30,7 @@ killAE (BlocksStmt blcks) prog = do
 killAE (BlocksTest _) _ = Data.Set.empty
 
 genAE :: Blocks -> Program -> AE
-genAE (BlocksStmt blcks) prog = do
+genAE (BlocksStmt blcks) _ = do
     case blcks of
         Assignment var aexp _ -> Data.Set.fromList [ a' | a' <- Data.Set.toList(nonTrivialAExpression(aexp)), var `Data.Set.notMember` fvAExp(a')]
         _ -> Data.Set.empty
