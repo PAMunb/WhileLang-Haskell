@@ -26,10 +26,6 @@ source-repository head
 library
   exposed-modules:
       CFG
-      CFG_BACKUP_16692
-      CFG_BASE_16692
-      CFG_LOCAL_16692
-      CFG_REMOTE_16692
       CFGtoDOT.GenerateDOT
       DataFlowAnalysis.AvailableExpressions
       DataFlowAnalysis.DFAAll
