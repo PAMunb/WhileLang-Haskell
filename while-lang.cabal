@@ -29,6 +29,7 @@ library
       CFGtoDOT.GenerateDOT
       DataFlowAnalysis.AvailableExpressions
       DataFlowAnalysis.DFAAll
+      DataFlowAnalysis.Framework
       DataFlowAnalysis.Helpers
       DataFlowAnalysis.LiveVariables
       DataFlowAnalysis.MaximalFixedPoint
