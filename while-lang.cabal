@@ -27,11 +27,19 @@ library
   exposed-modules:
       CFG
       CFGtoDOT.GenerateDOT
+      DataFlowAnalysis.AvailableExpressions
+      DataFlowAnalysis.DFAAll
+      DataFlowAnalysis.Framework
+      DataFlowAnalysis.Helpers
       DataFlowAnalysis.LiveVariables
       DataFlowAnalysis.MaximalFixedPoint
       DataFlowAnalysis.ReachingDefinitions
+      DataFlowAnalysis.VeryBusyExpressions
+      Programs.AvailableExpressionsExample
       Programs.FactorialProgram
+      Programs.LiveVariablesExample
       Programs.PowerProgram
+      Programs.VeryBusyExpressionsExample
       Syntax
   other-modules:
       Paths_while_lang

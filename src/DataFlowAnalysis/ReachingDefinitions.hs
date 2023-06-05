@@ -2,6 +2,7 @@ module DataFlowAnalysis.ReachingDefinitions where
 
 import Syntax
 import CFG
+import DataFlowAnalysis.Helpers
 
 import Data.Set
 import Data.Map
@@ -14,16 +15,15 @@ type RDEntry = Data.Map.Map Label RD
 type RDExit = Data.Map.Map Label RD
 
 reachingDefinitions :: Program -> (RDEntry, RDExit)
-reachingDefinitions prog = chaoticIteration update initial
+reachingDefinitions prog = chaoticIteration f initial
   where
     initial = (Data.Map.empty, Data.Map.empty)
-    update rd = Data.Set.foldr updateMappings rd (labels prog)
+    f rd = Data.Set.foldr updateMappings rd (labels prog)
     updateMappings l (entry', exit') =
       let 
           newEntry = rdEntry l prog exit'
           newExit = rdExit l prog entry'
       in (Data.Map.insert l newEntry entry', Data.Map.insert l newExit exit')
-    chaoticIteration f x = if f x == x then x else chaoticIteration f (f x)
 
   
 killRD :: Blocks -> Program -> RD
@@ -33,12 +33,12 @@ killRD (BlocksStmt blcks) prog = do
         _ -> Data.Set.empty
 killRD (BlocksTest {}) _ = Data.Set.empty
 
-genRD :: Blocks -> RD
-genRD (BlocksStmt stm) = do
+genRD :: Blocks -> Program -> RD
+genRD (BlocksStmt stm) _ = do
     case stm of
         Assignment var _ l -> Data.Set.singleton (var, l)
         _ -> Data.Set.empty
-genRD (BlocksTest {}) = Data.Set.empty
+genRD (BlocksTest {}) _ = Data.Set.empty
 
 rdEntry :: Label -> Program -> RDExit  -> RD
 rdEntry l prog exit
@@ -48,5 +48,5 @@ rdEntry l prog exit
 rdExit :: Label -> Program -> RDEntry -> RD
 rdExit l prog entry = do
   let Just b = findBlock l prog
-  ((findWithDefault Data.Set.empty l entry) `Data.Set.difference` (killRD b prog)) `Data.Set.union` (genRD b)
+  ((findWithDefault Data.Set.empty l entry) `Data.Set.difference` (killRD b prog)) `Data.Set.union` (genRD b prog)
   
