@@ -1,7 +1,6 @@
 module DataFlowAnalysis.Helpers where
 
 import Syntax
-import CFG
 
 import Data.Set
 import Data.List (foldl1')

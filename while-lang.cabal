@@ -28,13 +28,17 @@ library
       CFG
       CFGtoDOT.GenerateDOT
       DataFlowAnalysis.AvailableExpressions
-      DataFlowAnalysis.DFAAll
-      DataFlowAnalysis.Framework
       DataFlowAnalysis.Helpers
       DataFlowAnalysis.LiveVariables
-      DataFlowAnalysis.MaximalFixedPoint
       DataFlowAnalysis.ReachingDefinitions
       DataFlowAnalysis.VeryBusyExpressions
+      Framework.DFA
+      Framework.Framework
+      Framework.Instances.AvailableExpressions
+      Framework.Instances.LiveVariables
+      Framework.Instances.ReachingDefinitions
+      Framework.Instances.VeryBusyExpressions
+      MFP.MaximalFixedPoint
       Programs.AvailableExpressionsExample
       Programs.FactorialProgram
       Programs.LiveVariablesExample
@@ -60,6 +64,7 @@ test-suite while-lang-test
   other-modules:
       CFGFactorialTest
       CFGPowerTest
+      DFATest
       Paths_while_lang
   hs-source-dirs:
       test
